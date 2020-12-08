@@ -13,7 +13,7 @@ app.use(
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI = "/* mondodb connect */";
+const dbURI = " /* mongodb connect */";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
