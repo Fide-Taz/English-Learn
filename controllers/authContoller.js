@@ -10,11 +10,14 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = (req, res) => {
+  /* take user data */
+  const { email, password } = req.body;
   /* create new user in db */
   res.send("user signup");
 };
 
 module.exports.login_post = (req, res) => {
-  /* authenticate user */
+  /* take user data */
+  const { email, password } = req.body;
   res.send("user login");
 };

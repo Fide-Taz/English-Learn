@@ -5,13 +5,15 @@ const app = express();
 
 // middleware
 app.use(express.static("public"));
+app.use(
+  express.json()
+); /* this will take the user input data and pass it into js object and we can now access the data in  controller : req.body */
 
 // view engine
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI =
-  "mongodb+srv://fidellis:anotida2642@cluster0.cz7rv.mongodb.net/pizza";
+const dbURI = "/* mondodb connect */";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
