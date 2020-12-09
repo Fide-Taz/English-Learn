@@ -4,8 +4,14 @@ const User = require("../models/User");
 
 /* handle Errors */
 const handleErrors = (err) => {
-  console.log(err.message, err.code);
+  console.log(err.message, err.code); //err.code is for unique email
   let errors = { email: "", password: "" };
+
+  /*  duplicate error code */
+  if (err.code === 11000) {
+    errors.email = "That email is already registered";
+    return errors;
+  }
 
   //validatin errors
   if (err.message.includes("user validation failed")) {
