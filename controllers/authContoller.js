@@ -2,6 +2,24 @@ const User = require("../models/User");
 
 /* export each function by attaching the module.exports*/
 
+/* handle Errors */
+const handleErrors = (err) => {
+  console.log(err.message, err.code);
+  let errors = { email: "", password: "" };
+
+  //validatin errors
+  if (err.message.includes("user validation failed")) {
+    /*the err contains errors object with all the info */
+    console.log(Object.values(err.errors));
+
+    Object.values(err.errors).forEach((erro) => {
+      /* update the email and pass above to these errors  */
+      errors[erro.properties.path] = erro.properties.message;
+    });
+  }
+  return errors;
+};
+
 /* respond to the routes in authRoutes */
 module.exports.signup_get = (req, res) => {
   res.render("signup");
@@ -12,7 +30,7 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = async (req, res) => {
-  /* take user data */
+  /* take user data : becoz of express.json in app.js*/
   const { email, password } = req.body;
 
   /* create new user in db */
@@ -23,8 +41,10 @@ module.exports.signup_post = async (req, res) => {
       .status(201)
       .json(user); /* send the new user from db which contains id ... */
   } catch (error) {
-    console.log(error);
-    res.status(400).send("error user not created");
+    const errors = handleErrors(
+      error
+    ); /* the arg here is the errors from the Schema : this function will now continue */
+    res.status(400).json({ errors });
   }
 };
 

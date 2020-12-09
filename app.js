@@ -13,7 +13,8 @@ app.use(
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI = " /* mongodb connect */";
+const dbURI =
+  "mongodb+srv://fidellis:anotida2642@cluster0.cz7rv.mongodb.net/pizza";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
@@ -23,7 +24,7 @@ mongoose
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-// routes
+// route
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
 app.use(authRoutes);
