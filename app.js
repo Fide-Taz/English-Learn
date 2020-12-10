@@ -1,10 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 // middleware
 app.use(express.static("public"));
+app.use(cookieParser());
 app.use(
   express.json()
 ); /* this will take the user input data and pass it into js object and we can now access the data in  controller : req.body */

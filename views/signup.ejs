@@ -18,12 +18,33 @@
 <script>
     const form = document.querySelector('form')
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault()
 
         //get the values 
         const email = form.email.value
         const password = form.password.value
+
+        /* send a request to the server */
+
+
+        try {
+            const rest = await fetch('/signup', {
+                method: 'post',
+                body: JSON.stringify({
+                    email,
+                    password
+                }), //pass the data to go
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            })
+        } catch (error) {
+            console.log(error);
+
+        }
+
     })
 </script>
 
