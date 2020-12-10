@@ -66,5 +66,12 @@ module.exports.signup_post = async (req, res) => {
 module.exports.login_post = async (req, res) => {
   /* take user data */
   const { email, password } = req.body;
-  res.send("user login");
+
+  try {
+    /* take user from the model and login */
+    const user = await User.login(email, password);
+    res.status(200).json({ user: user._id });
+  } catch (error) {
+    res.status(400).json({});
+  }
 };
