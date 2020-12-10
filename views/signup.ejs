@@ -17,19 +17,28 @@
 
 <script>
     const form = document.querySelector('form')
+    //for error content
+    const emailError = document.querySelector('.email.error')
+    const passwordError = document.querySelector('.password.error')
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault()
+
+
+        //reset errors
+        emailError.textContent = '';
+        passwordError.textContent = '';
 
         //get the values 
         const email = form.email.value
         const password = form.password.value
 
+
         /* send a request to the server */
 
 
         try {
-            const rest = await fetch('/signup', {
+            const res = await fetch('/signup', {
                 method: 'post',
                 body: JSON.stringify({
                     email,
@@ -38,8 +47,18 @@
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
             })
+            /* check if the data entered by user has errors from the server or not */
+            const data = await res.json();
+            if (data.errors) {
+                emailError.textContent = data.errors.email;
+                passwordError.textContent = data.errors.password;
+            }
+            /* if user */
+            if (data.user) {
+                /* redirect to home page */
+                location.assign('/')
+            }
         } catch (error) {
             console.log(error);
 
